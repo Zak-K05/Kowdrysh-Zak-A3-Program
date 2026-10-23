@@ -11,7 +11,11 @@ namespace Game10003
     public class Game
     {
         // Place your variables here:
+        const float maxSpawnInterval = 5f;
+        const float minSpawnInterval = 1f;
 
+        float timeLastSinceCheck = 0f;
+        float spawnWaitTime = 0f;
 
         /// <summary>
         ///     Setup runs once before the game loop begins.
@@ -28,6 +32,23 @@ namespace Game10003
         public void Update()
         {
             Window.ClearBackground(Color.OffWhite);
+
+            CheckRectTrigger();
+        }
+
+
+        public void CheckRectTrigger()
+        {
+            timeLastSinceCheck += Time.DeltaTime;
+
+            if (timeLastSinceCheck > spawnWaitTime) 
+            {
+                timeLastSinceCheck = 0f;
+                spawnWaitTime = Random.Float(minSpawnInterval, maxSpawnInterval);
+
+                //Put trigger rect func here
+                Console.WriteLine("Trigger rect");
+            }
         }
     }
 }
