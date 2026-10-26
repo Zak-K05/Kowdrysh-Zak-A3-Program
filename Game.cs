@@ -52,6 +52,28 @@ namespace Game10003
             CheckActiveBlocks(); // Handle active and inactive blocks
 
             DrawBlocks(); // Draw blocks based on progress
+
+            CheckClick(); // Check for player clicks
+        }
+
+
+        void CheckClick()
+        {
+            if (Input.IsMouseButtonPressed(MouseInput.Left))
+            {
+                for (int i = 0; i < activeBlocks.Length; i++)
+                {
+                    if (Input.GetMouseX() > 100 + (i * 150) - 50 && // Left side check
+                        Input.GetMouseX() < 100 + (i * 150) - 50 + 100 && // Right side check
+                        Input.GetMouseY() > 600 - (inactiveSize + (activeGrowthAmount * blocksProgress[i])) && // Top side check
+                        activeBlocks[i] == true)
+                    {
+                        activeBlocks[i] = false;
+                    }
+
+
+                }
+            }
         }
 
 
