@@ -51,7 +51,7 @@ namespace Game10003
 
             CheckActiveBlocks(); // Handle active and inactive blocks
 
-            DrawBlocks();
+            DrawBlocks(); // Draw blocks based on progress
         }
 
 
@@ -60,6 +60,7 @@ namespace Game10003
             Draw.FillColor = Color.White;
             Draw.LineSize = 2;
 
+            // Go thru every block and make more red as progress goes up
             for (int i = 0; i < activeBlocks.Length; i++)
             {
 
@@ -72,6 +73,9 @@ namespace Game10003
 
         void CheckActiveBlocks()
         {
+            // Check every block
+            // If block is active, add to progress and cap at 1
+            // If block is not active, remove from progress and cap at 0
             for (int i = 0; i < activeBlocks.Length; i++)
             {
                 if (activeBlocks[i] == true)
@@ -100,7 +104,7 @@ namespace Game10003
             // Add time to last check
             timeLastSinceCheck += Time.DeltaTime;
 
-            // Trigger block when its been long enough and reset
+            // Trigger block when its been long enough and reset timer
             if (timeLastSinceCheck > spawnWaitTime) 
             {
                 timeLastSinceCheck = 0f;
@@ -112,11 +116,9 @@ namespace Game10003
 
         void TriggerRandomBlock()
         {
+            // Randomly activate/deactivate block
             chosenBlockIndex = Random.Integer(activeBlocks.Length);
-            if (activeBlocks[chosenBlockIndex] == false)
-            {
-                activeBlocks[chosenBlockIndex] = true;
-            }
+            activeBlocks[chosenBlockIndex] = !activeBlocks[chosenBlockIndex];
         }
     }
 }
