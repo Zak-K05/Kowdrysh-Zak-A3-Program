@@ -1,5 +1,6 @@
 ﻿// Include code libraries you need below (use the namespace).
 using System;
+using System.Drawing;
 using System.Numerics;
 
 // The namespace your code is in.
@@ -14,11 +15,14 @@ namespace Game10003
         // Blocks Constants
         const float maxSpawnInterval = 3f;
         const float minSpawnInterval = 1f;
-        const float incrementAmount = 0.05f;
+        const float incrementAmount = 0.025f;
+        const int inactiveSize = 100;
+        const int activeGrowthAmount = 300;
+
 
         // Blocks Tracking
-        bool[] activeBlocks = {false, false, false, false, false, false};
-        float[] blocksProgress = {0f, 0f, 0f, 0f, 0f, 0f};
+        bool[] activeBlocks = {false, false, false, false, false};
+        float[] blocksProgress = {0f, 0f, 0f, 0f, 0f};
 
         //
         float timeLastSinceCheck = 0f;
@@ -46,6 +50,23 @@ namespace Game10003
             CheckRectTrigger(); // Check if its time to trigger blocks
 
             CheckActiveBlocks(); // Handle active and inactive blocks
+
+            DrawBlocks();
+        }
+
+
+        void DrawBlocks()
+        {
+            Draw.FillColor = Color.White;
+            Draw.LineSize = 2;
+
+            for (int i = 0; i < activeBlocks.Length; i++)
+            {
+
+                Draw.FillColor = new Color(255, (int)(255 * (1f - blocksProgress[i])), (int)(255 * (1f - blocksProgress[i])));
+                Draw.Rectangle(100 + (i * 150) - 50, 600 - (inactiveSize + (activeGrowthAmount * blocksProgress[i])), 
+                    100, inactiveSize + (activeGrowthAmount * blocksProgress[i]) + 5);
+            }
         }
 
 
