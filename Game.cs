@@ -28,6 +28,7 @@ namespace Game10003
         float timeLastSinceCheck = 0f;
         float spawnWaitTime = 0f;
         int chosenBlockIndex = 0;
+        int playerScore = 0;
 
         /// <summary>
         ///     Setup runs once before the game loop begins.
@@ -54,6 +55,14 @@ namespace Game10003
             DrawBlocks(); // Draw blocks based on progress
 
             CheckClick(); // Check for player clicks
+
+            DrawScore(); // Show score
+        }
+
+
+        void DrawScore()
+        {
+            Text.Draw($"Score: {playerScore}", 0, 0);
         }
 
 
@@ -68,10 +77,9 @@ namespace Game10003
                         Input.GetMouseY() > 600 - (inactiveSize + (activeGrowthAmount * blocksProgress[i])) && // Top side check
                         activeBlocks[i] == true)
                     {
+                        playerScore ++;
                         activeBlocks[i] = false;
                     }
-
-
                 }
             }
         }
