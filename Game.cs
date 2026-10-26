@@ -13,8 +13,6 @@ namespace Game10003
     {
         // Place your variables here:
         // Blocks Constants
-        const float maxSpawnInterval = 3f;
-        const float minSpawnInterval = 1f;
         const float incrementAmount = 0.025f;
         const int inactiveSize = 100;
         const int activeGrowthAmount = 300;
@@ -27,6 +25,8 @@ namespace Game10003
         //
         float timeLastSinceCheck = 0f;
         float spawnWaitTime = 0f;
+        float maxSpawnInterval = 3f;
+        float minSpawnInterval = 1f;
         int chosenBlockIndex = 0;
         int playerScore = 0;
 
@@ -79,6 +79,9 @@ namespace Game10003
                     {
                         playerScore ++;
                         activeBlocks[i] = false;
+
+                        minSpawnInterval *= 0.9f;
+                        maxSpawnInterval *= 0.9f;
                     }
                 }
             }
@@ -134,7 +137,7 @@ namespace Game10003
             // Add time to last check
             timeLastSinceCheck += Time.DeltaTime;
 
-            // Trigger block when its been long enough and reset timer
+            // Trigger block when its been long enough, reset timer and adjust timing
             if (timeLastSinceCheck > spawnWaitTime) 
             {
                 timeLastSinceCheck = 0f;
